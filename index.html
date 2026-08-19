@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style id='brand'>:root{
+  --bg:#0b0b0c; --surface:#141417; --surface-2:#1c1c21;
+  --fg:#f5f5f7; --fg-muted:#a1a1aa; --border:#26262b;
+  --accent:#3b82f6; --accent-fg:#fff; --radius:14px; --maxw:1100px;
+  --font:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.section{padding:96px 0}
+.hero{padding:140px 0 90px;text-align:center}
+h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+h2{font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-.01em}
+.muted{color:var(--fg-muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-fg);padding:14px 28px;border-radius:var(--radius);font-weight:600;text-decoration:none;border:0;cursor:pointer;transition:transform .15s ease,opacity .15s ease}
+.btn:hover{transform:translateY(-2px);opacity:.92}
+.btn-ghost{background:transparent;color:var(--fg);border:1px solid var(--border)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.grid{display:grid;gap:24px}
+@media(max-width:640px){.section{padding:64px 0}.hero{padding:96px 0 64px}}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Assistant — Close Audits Faster, With Confidence</title>
+<style>
+  :root{
+    --accent: #1d7a74;
+    --accent-2: #f2a03d;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    font-feature-settings: "ss01";
+  }
+
+  /* ---------- NAV ---------- */
+  .navbar{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s ease, box-shadow .3s ease;
+  }
+  .navbar.scrolled{
+    border-bottom-color: var(--border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 1rem 0;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--fg);
+    text-decoration:none;
+    letter-spacing:-0.02em;
+  }
+  .brand-mark{
+    width:32px;height:32px;
+    border-radius:9px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .brand-mark svg{width:18px;height:18px;}
+  .nav-links{
+    display:flex;
+    gap:2rem;
+    list-style:none;
+    margin:0;padding:0;
+  }
+  .nav-links a{
+    color:var(--fg-muted);
+    text-decoration:none;
+    font-size:.94rem;
+    font-weight:500;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{ color:var(--fg); }
+  .nav-cta{ display:flex; gap:.7rem; align-items:center; }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding-top: 5.5rem;
+    padding-bottom: 4rem;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset: -20% -10% auto -10%;
+    height: 700px;
+    background:
+      radial-gradient(600px 300px at 20% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+      radial-gradient(500px 300px at 85% 10%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .hero-content{
+    position:relative;
+    z-index:1;
+    max-width: 760px;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.35rem .8rem;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background: var(--surface);
+    font-size:.8rem;
+    font-weight:600;
+    color: var(--accent);
+    margin-bottom:1.5rem;
+    animation: fadeUp .6s ease both;
+  }
+  .eyebrow .dot{
+    width:6px;height:6px;border-radius:50%;
+    background: var(--accent-2);
+  }
+  .hero h1{
+    font-size: clamp(2.3rem, 5vw, 3.6rem);
+    line-height:1.08;
+    letter-spacing:-0.03em;
+    margin: 0 0 1.2rem;
+    animation: fadeUp .7s ease .05s both;
+  }
+  .hero h1 span{
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.lead{
+    font-size: 1.15rem;
+    color: var(--fg-muted);
+    max-width: 560px;
+    margin-bottom: 2rem;
+    animation: fadeUp .7s ease .12s both;
+  }
+  .hero-actions{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+    margin-bottom: 2.5rem;
+    animation: fadeUp .7s ease .18s both;
+  }
+  .hero-note{
+    font-size:.85rem;
+    color:var(--fg-muted);
+  }
+  .hero-stats{
+    display:flex;
+    gap:2.5rem;
+    flex-wrap:wrap;
+    margin-top:2.5rem;
+    animation: fadeUp .7s ease .24s both;
+  }
+  .stat-num{
+    font-size:1.8rem;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    color:var(--fg);
+  }
+  .stat-label{
+    font-size:.82rem;
+    color:var(--fg-muted);
+  }
+
+  .hero-visual{
+    position:relative;
+    z-index:1;
+    margin-top: 3rem;
+    border-radius: calc(var(--radius) + 6px);
+    border:1px solid var(--border);
+    background: var(--surface);
+    padding: 1.2rem;
+    box-shadow: 0 30px 60px -25px rgba(0,0,0,0.25);
+    animation: fadeUp .8s ease .3s both;
+  }
+  .panel-row{
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.2rem;
+  }
+  .panel{
+    border:1px solid var(--border);
+    border-radius: var(--radius);
+    padding:1rem 1.1rem;
+    background: color-mix(in srgb, var(--bg) 60%, var(--surface));
+  }
+  .panel h4{ margin:0 0 .6rem; font-size:.85rem; color:var(--fg-muted); font-weight:600; text-transform:uppercase; letter-spacing:.05em;}
+  .task-item{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    padding:.5rem 0;
+    border-bottom:1px dashed var(--border);
+    font-size:.88rem;
+  }
+  .task-item:last-child{ border-bottom:none; }
+  .check{
+    width:18px;height:18px;
+    border-radius:5px;
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.65rem;
+    color:#fff;
+  }
+  .check.done{ background: var(--accent); }
+  .check.pending{ background: transparent; border:1.5px solid var(--border); }
+  .progress-ring{
+    width:110px;height:110px;
+    margin:0 auto;
+    border-radius:50%;
+    background: conic-gradient(var(--accent) 0 78%, var(--border) 78% 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .progress-inner{
+    width:82px;height:82px;
+    border-radius:50%;
+    background: var(--surface);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .progress-inner strong{ font-size:1.3rem; }
+  .progress-inner span{ font-size:.68rem; color:var(--fg-muted); }
+
+  /* ---------- LOGOS ---------- */
+  .logos{
+    display:flex;
+    justify-content:center;
+    gap: 3rem;
+    flex-wrap:wrap;
+    opacity:.6;
+    padding: 1.5rem 0 0;
+    font-size:.82rem;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color: var(--fg-muted);
+  }
+
+  /* ---------- FEATURES ---------- */
+  .section-head{
+    max-width: 620px;
+    margin: 0 auto 3rem;
+    text-align:center;
+  }
+  .section-head h2{
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    letter-spacing:-0.02em;
+    margin-bottom:.8rem;
+  }
+  .feature-card{
+    display:flex;
+    flex-direction:column;
+    gap: .9rem;
+    height:100%;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .feature-card:hover{
+    transform: translateY(-6px);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.2);
+  }
+  .feature-icon{
+    width:44px;height:44px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    display:flex;align-items:center;justify-content:center;
+    color: var(--accent);
+  }
+  .feature-icon svg{ width:22px; height:22px; }
+  .feature-card h3{ margin:0; font-size:1.08rem; letter-spacing:-0.01em; }
+  .feature-card p{ margin:0; color:var(--fg-muted); font-size:.92rem; line-height:1.55; }
+
+  /* ---------- WORKFLOW STRIP ---------- */
+  .workflow{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    counter-reset: step;
+  }
+  .workflow-step{
+    position:relative;
+    padding-top: 1.2rem;
+  }
+  .workflow-step::before{
+    counter-increment: step;
+    content: counter(step, decimal-leading-zero);
+    font-size: .78rem;
+    font-weight:700;
+    color: var(--accent);
+    display:block;
+    margin-bottom:.5rem;
+  }
+  .workflow-step h4{ margin:0 0 .4rem; font-size:1rem; }
+  .workflow-step p{ margin:0; font-size:.86rem; color:var(--fg-muted); line-height:1.5; }
+  .workflow-step:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    top: 0.3rem;
+    right: -0.9rem;
+    width: 12px;height:12px;
+    border-top:2px solid var(--border);
+    border-right:2px solid var(--border);
+    transform: rotate(45deg);
+    display:none;
+  }
+  @media(min-width: 860px){
+    .workflow-step:not(:last-child)::after{ display:block; }
+  }
+
+  /* ---------- PRICING ---------- */
+  .pricing-grid{
+    align-items: stretch;
+  }
+  .price-card{
+    display:flex;
+    flex-direction:column;
+    gap: 1.3rem;
+    position:relative;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .price-card:hover{ transform: translateY(-4px); }
+  .price-card.featured{
+    border: 2px solid var(--accent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, var(--surface)), var(--surface));
+  }
+  .price-badge{
+    position:absolute;
+    top: -13px;
+    right: 1.4rem;
+    background: var(--accent);
+    color: #fff;
+    font-size: .72rem;
+    font-weight:700;
+    padding: .3rem .7rem;
+    border-radius: 999px;
+    letter-spacing:.03em;
+  }
+  .price-tier{ font-size:.9rem; font-weight:700; color: var(--accent); text-transform:uppercase; letter-spacing:.05em; }
+  .price-amount{ font-size: 2.4rem; font-weight:700; letter-spacing:-0.03em; }
+  .price-amount span{ font-size:1rem; font-weight:500; color: var(--fg-muted); }
+  .price-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.65rem; flex-grow:1; }
+  .price-list li{ font-size:.9rem; color: var(--fg-muted); display:flex; gap:.6rem; align-items:flex-start; }
+  .price-list li svg{ flex-shrink:0; margin-top:2px; width:16px;height:16px; color: var(--accent); }
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    border-radius: calc(var(--radius) + 8px);
+    background: linear-gradient(120deg, var(--accent), color-mix(in srgb, var(--accent) 60%, var(--accent-2)));
+    color: #fff;
+    padding: 3.2rem 2.5rem;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-band h2{ margin:0 0 .7rem; font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing:-0.02em; }
+  .cta-band p{ margin:0 0 1.6rem; opacity:.92; }
+  .cta-band .btn{ background:#fff; color: var(--accent); border:none; }
+  .cta-band .btn:hover{ transform: translateY(-2px); }
+  .cta-band .btn-ghost{ border-color: rgba(255,255,255,.5); color:#fff; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top: 1px solid var(--border);
+    padding: 3.5rem 0 2rem;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .footer-grid h5{
+    font-size:.8rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color: var(--fg-muted);
+    margin: 0 0 1rem;
+  }
+  .footer-grid ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.6rem; }
+  .footer-grid a{ color: var(--fg); text-decoration:none; font-size:.9rem; }
+  .footer-grid a:hover{ color: var(--accent); }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size:.82rem;
+    color: var(--fg-muted);
+  }
+
+  @keyframes fadeUp{
+    from{ opacity:0; transform: translateY(16px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px){
+    .panel-row{ grid-template-columns: 1fr; }
+    .workflow{ grid-template-columns: repeat(2,1fr); }
+    .footer-grid{ grid-template-columns: 1fr 1fr; }
+    .nav-links{ display:none; }
+  }
+  @media (max-width: 560px){
+    .hero-stats{ gap:1.4rem; }
+    .workflow{ grid-template-columns: 1fr; }
+    .footer-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      Audit Assistant
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn-ghost btn" style="padding:.55rem 1.1rem; font-size:.88rem;">Sign in</a>
+      <a href="#pricing" class="btn" style="padding:.55rem 1.2rem; font-size:.88rem;">Start free trial</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow"><span class="dot"></span> Built for audit & assurance teams</span>
+    <h1>Audit workpapers that<br><span>close themselves.</span></h1>
+    <p class="lead">Audit Assistant centralizes evidence, testing, sign-off and client requests in one workspace — so your team clears review notes faster and ships engagements on time, every time.</p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn">Start free trial</a>
+      <a href="#workflow" class="btn-ghost btn">See how it works</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num" data-count="38">0</div>
+        <div class="stat-label">% less review time</div>
+      </div>
+      <div>
+        <div class="stat-num" data-count="1200">0</div>
+        <div class="stat-label">engagements delivered</div>
+      </div>
+      <div>
+        <div class="stat-num" data-count="99">0</div>
+        <div class="stat-label">% on-time close rate</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero-visual">
+      <div class="panel-row">
+        <div class="panel">
+          <h4>Fieldwork checklist — Revenue cycle</h4>
+          <div class="task-item"><span class="check done">✓</span> Confirm cut-off testing sample (n=45)</div>
+          <div class="task-item"><span class="check done">✓</span> Trace invoices to shipping docs</div>
+          <div class="task-item"><span class="check pending"></span> Review manager sign-off pending</div>
+          <div class="task-item"><span class="check pending"></span> Upload analytical review memo</div>
+        </div>
+        <div class="panel" style="text-align:center;">
+          <h4>Engagement progress</h4>
+          <div class="progress-ring">
+            <div class="progress-inner">
+              <strong>78%</strong>
+              <span>complete</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="logos">
+    <span>Trusted by mid-size firms</span>
+    <span>Internal audit teams</span>
+    <span>Assurance practices</span>
+    <span>Advisory boutiques</span>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <h2>Everything an engagement team touches — in one place</h2>
+      <p class="muted">Stop chasing evidence across email, spreadsheets and shared drives. Audit Assistant gives every workpaper a home, a status, and an owner.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr); gap:1.5rem;">
+      <div class="card feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V7l8-4z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Smart workpapers</h3>
+        <p>Templated, version-controlled workpapers that auto-link supporting evidence and flag exceptions in real time.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Client PBC portal</h3>
+        <p>A single, trackable request list clients actually respond to — with reminders and upload status baked in.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Risk-based sampling</h3>
+        <p>Generate defensible samples from population data in seconds, tied directly to your risk assessment.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Real-time review trail</h3>
+        <p>Partner and manager review notes attach directly to the evidence — no more version chaos or lost comments.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>ERP & GL integrations</h3>
+        <p>Pull trial balances and transaction data directly from QuickBooks, Xero, NetSuite and SAP.</p>
+      </div>
+      <div class="card feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>ISA & SOX aligned</h3>
+        <p>Templates and controls mapped to ISA, GAAS and SOX 404 requirements — audit-ready by default.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="workflow" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="section-head">
+      <h2>From planning to sign-off, in four moves</h2>
+      <p class="muted">Audit Assistant mirrors how your engagement actually runs — no re-training required.</p>
+    </div>
+    <div class="workflow">
+      <div class="workflow-step">
+        <h4>Plan the engagement</h4>
+        <p>Set scope, materiality and risk assessment. Auto-generate the fieldwork plan from prior-year files.</p>
+      </div>
+      <div class="workflow-step">
+        <h4>Collect evidence</h4>
+        <p>Clients upload via portal, integrations pull GL data — everything lands tagged and organized.</p>
+      </div>
+      <div class="workflow-step">
+        <h4>Test & review</h4>
+        <p>Perform testing inline, raise exceptions, and route to reviewers with full audit trail.</p>
+      </div>
+      <div class="workflow-step">
+        <h4>Sign off & report</h4>
+        <p>Partner sign-off, export final workpapers, and archive the file in one click.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <h2>Simple pricing that scales with your practice</h2>
+      <p class="muted">Every plan includes unlimited evidence storage and the client PBC portal.</p>
+    </div>
+    <div class="grid pricing-grid" style="grid-template-columns:repeat(3,1fr); gap:1.5rem;">
+      <div class="card price-card">
+        <div class="price-tier">Solo</div>
+        <div class="price-amount">$39<span>/mo</span></div>
+        <p class="muted" style="margin:0; font-size:.9rem;">For independent auditors and small practices.</p>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Up to 5 active engagements</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Client PBC portal</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Standard workpaper templates</li>
+        </ul>
+        <a href="#" class="btn-ghost btn" style="text-align:center;">Start free trial</a>
+      </div>
+      <div class="card price-card featured">
+        <span class="price-badge">Most popular</span>
+        <div class="price-tier">Team</div>
+        <div class="price-amount">$119<span>/mo</span></div>
+        <p class="muted" style="margin:0; font-size:.9rem;">For growing firms running multiple engagements.</p>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Unlimited engagements</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Risk-based sampling engine</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ERP & GL integrations</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Reviewer workflow & sign-off</li>
+        </ul>
+        <a href="#" class="btn" style="text-align:center;">Start free trial</a>
+      </div>
+      <div class="card price-card">
+        <div class="price-tier">Firm</div>
+        <div class="price-amount">Custom</div>
+        <p class="muted" style="margin:0; font-size:.9rem;">For firms needing SSO, custom templates & SLAs.</p>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Everything in Team</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> SSO & role-based permissions</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Custom templates & mapping</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Dedicated success manager</li>
+        </ul>
+        <a href="#" class="btn-ghost btn" style="text-align:center;">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <h2>Ready to close your next audit faster?</h2>
+      <p>Set up your first engagement in under 15 minutes. No credit card required.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="#pricing" class="btn">Start free trial</a>
+        <a href="#" class="btn-ghost btn">Book a demo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="faq">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="brand" style="margin-bottom:1rem; display:inline-flex;">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Audit Assistant
+        </a>
+        <p class="muted" style="font-size:.88rem; max-width:280px;">The workspace built for audit and assurance teams — evidence, testing and sign-off in one file.</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#workflow">Workflow</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#">Integrations</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#">Help center</a></li>
+          <li><a href="#">ISA checklist library</a></li>
+          <li><a href="#">Status</a></li>
+          <li><a href="#">Trust center</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Audit Assistant. All rights reserved.</span>
+      <span>Made for auditors who'd rather audit than chase files.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav shadow
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 12);
+  });
+
+  // Smooth scroll for in-page links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if(id.length > 1){
+        const target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+
+  // Count-up stats (content already visible as "0"; enhances progressively)
+  const counters = document.querySelectorAll('.stat-num');
+  const animateCount = (el) => {
+    const target = parseInt(el.getAttribute('data-count'), 10);
+    let current = 0;
+    const step = Math.max(1, Math.ceil(target / 40));
+    const tick = () => {
+      current += step;
+      if(current >= target){
+        el.textContent = target;
+      } else {
+        el.textContent = current;
+        requestAnimationFrame(tick);
+      }
+    };
+    tick();
+  };
+
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          animateCount(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(c => io.observe(c));
+  } else {
+    counters.forEach(c => { c.textContent = c.getAttribute('data-count'); });
+  }
+
+  // Subtle tilt on feature cards
+  document.querySelectorAll('.feature-card, .price-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `translateY(-4px) rotateX(${(-y*3).toFixed(2)}deg) rotateY(${(x*3).toFixed(2)}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+</script>
+
+</body>
+</html>
